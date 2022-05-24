@@ -1,19 +1,48 @@
 <template>
   <main
-    class="w-screen h-auto min-h-screen flex flex-column align-items-center justify-content-start"
+    class="
+      w-screen
+      h-auto
+      min-h-screen
+      flex flex-column
+      align-items-center
+      justify-content-start
+    "
   >
     <section
-      class="banner w-screen flex flex-row align-items-center justify-content-center"
+      class="
+        banner
+        w-screen
+        flex flex-row
+        align-items-center
+        justify-content-center
+      "
     >
       <div
-        class="banner-info flex flex-row align-items-center justify-content-center"
+        class="
+          banner-info
+          flex flex-row
+          align-items-center
+          justify-content-center
+        "
       >
         <div
-          class="info-content flex flex-column align-items-start justify-content-center"
+          class="
+            info-content
+            flex flex-column
+            align-items-start
+            justify-content-center
+          "
         >
-          <img :src="banner.logo" alt="Movie Logo" />
+          <img class="fadeClass" :src="banner.logo" alt="Movie Logo" />
           <div
-            class="rating flex flex-row align-items-center justify-content-start"
+            class="
+              fadeClass
+              rating
+              flex flex-row
+              align-items-center
+              justify-content-start
+            "
           >
             <i class="m-1 w-auto pi pi-star-fill"></i>
             <i class="m-1 w-auto pi pi-star-fill"></i>
@@ -22,77 +51,82 @@
             <i class="m-1 w-auto pi pi-star-fill"></i>
             <span>2016 2 temporadas</span>
           </div>
-          <p v-if="banner.description">{{ banner.description }}</p>
+          <p class="fadeClass" v-if="banner.description">
+            {{ banner.description }}
+          </p>
         </div>
       </div>
 
-      <img class="logoManflix" src="manflix.png" alt="Logo" />
+      <img class="logoManflix fadeClass" src="manflix.png" alt="Logo" />
 
       <div class="banner-image">
-        <img :src="banner.image" alt="Movie Image" />
+        <img
+          v-show="banner.image"
+          class="fadeClass"
+          :src="banner.image"
+          alt="Movie Image"
+        />
       </div>
     </section>
 
     <section
-      class="movies w-screen h-auto flex flex-column align-items-start justify-content-center"
+      class="
+        movies
+        w-screen
+        h-auto
+        flex flex-column
+        align-items-start
+        justify-content-center
+      "
     >
+     
       <!-- LISTAGEM CATEGORIA AÇÃO -->
+      <h3 class="ml-3">Ação</h3>
       <div class="movies-category">
         <section
           v-for="index in noSection"
           :key="index"
           :id="'section' + index"
         >
-          <a :href="'#section' + (index - 1 <= 0 ? noSection : index - 1)"><</a>
-          <div v-for="subIndex in noItems" :key="subIndex" class="item"
-           @click="()=>{
-             banner.image = $store.state.BASE_URL + movies[2].movies[( ((index - 1) * noItems ) + (subIndex - 1))].banner
-              banner.logo = $store.state.BASE_URL + movies[2].movies[( ((index - 1) * noItems ) + (subIndex - 1))].logo
-               banner.description = movies[2].movies[( ((index - 1) * noItems ) + (subIndex - 1))].descricao
+          <a :href="'#section' + (index - 1 <= 0 ? noSection : index - 1)">
+            <div class="arrowContainer">&#8592;</div>
+          </a>
+          <div
+            v-for="subIndex in noItems"
+            :key="subIndex"
+            class="item"
+            @click="
+              () => {
+                banner.image =
+                  $store.state.BASE_URL +
+                  movies[2].movies[(index - 1) * noItems + (subIndex - 1)]
+                    .banner;
 
-            }">
-              <img 
-                v-if="movies[2] !== undefined"           
-                :src="$store.state.BASE_URL + movies[2].movies[( ((index - 1) * noItems ) + (subIndex - 1))].foto"
-              />                       
+                banner.logo =
+                  $store.state.BASE_URL +
+                  movies[2].movies[(index - 1) * noItems + (subIndex - 1)].logo;
+
+                banner.description =
+                  movies[2].movies[
+                    (index - 1) * noItems + (subIndex - 1)
+                  ].descricao;
+              }
+            "
+          > 
+            <!-- <button class="fav">Favorito</button> -->
+            <img
+              v-if="movies[2] !== undefined"
+              :src="
+                $store.state.BASE_URL +
+                movies[2].movies[(index - 1) * noItems + (subIndex - 1)].foto
+              "
+            />
           </div>
 
-          <a :href="'#section' + (index + 1 > noSection ? 1 : index + 1)">></a>
+          <a :href="'#section' + (index + 1 > noSection ? 1 : index + 1)">
+            <div class="arrowContainer">&#8594;</div>
+          </a>
         </section>
-
-        <!-- <section id="section2">
-         <a href="#section1"><</a>
-         <div class="item">
-           <img src="https://poltronanerd.com.br/wp-content/uploads/2018/10/poltrona-daredevil-poster-season3-692x1024.jpg">
-         </div>
-         <div class="item">
-           <img src="https://poltronanerd.com.br/wp-content/uploads/2018/10/poltrona-daredevil-poster-season3-692x1024.jpg">
-         </div>
-         <div class="item">
-           <img src="https://poltronanerd.com.br/wp-content/uploads/2018/10/poltrona-daredevil-poster-season3-692x1024.jpg">
-         </div>
-         <div class="item">
-           <img src="https://poltronanerd.com.br/wp-content/uploads/2018/10/poltrona-daredevil-poster-season3-692x1024.jpg">
-         </div>
-         <a href="#section3">></a>
-       </section>
-
-       <section id="section3">
-         <a href="#section2"><</a>
-         <div class="item">
-           <img src="https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg">
-         </div>
-         <div class="item">
-           <img src="https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg">
-         </div>
-         <div class="item">
-           <img src="https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg">
-         </div>
-         <div class="item">
-           <img src="https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg">
-         </div>
-         <a href="#section1">></a>
-       </section> -->
       </div>
     </section>
   </main>
@@ -117,7 +151,7 @@ export default {
       noItems: 4,
     };
   },
-  methods: {    
+  methods: {
     getCategories: async function () {
       await this.$axios
         .get(this.$store.state.BASE_URL + "/categoria")
@@ -130,8 +164,8 @@ export default {
         });
     },
     getMovie: async function () {
-        this.categories.map((category) => {
-          this.$axios
+      this.categories.map((category) => {
+        this.$axios
           .get(this.$store.state.BASE_URL + "/filmes?categoria=" + category.id)
           .then((response) => {
             console.log(response.data);
@@ -143,17 +177,14 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-          })
-          
-      }) 
-          
+          });
+      });
     },
   },
 
   async created() {
     await Promise.all([this.getCategories()]);
-    this.getMovie()
-   
+    this.getMovie();
   },
 };
 </script>
@@ -243,7 +274,8 @@ main {
           }
 
           img {
-            // height: 300px;
+            height: 330px;
+            /* max-width: 300px; */
           }
         }
 
@@ -251,9 +283,10 @@ main {
           position: absolute;
           color: white;
           text-decoration: none;
-          font-size: 6rem;
+          font-size: 5rem;
           background-color: black;
           width: 80px;
+          height: 330px;
           padding: 20px;
           text-align: center;
           z-index: 1;
@@ -278,9 +311,42 @@ main {
               rgba(0, 0, 0, 1) 100%
             );
           }
+
+          .arrowContainer {
+            /* background-color: red; */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
     }
   }
+}
+
+.fadeClass {
+  animation: fadeIn 6s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fav{
+  /* position: absolute; */
+  bottom: 20px;
+  /* bottom: 0;
+  right: 0;
+  left: 0; */
+  width: 50px;
+  height: 50px;
 }
 </style>
